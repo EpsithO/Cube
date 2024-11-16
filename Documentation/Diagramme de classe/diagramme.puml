@@ -1,90 +1,108 @@
-@startuml Vehicle example
-
-abstract class Vehicle {
-	int passengersNb
+@startuml diagramme de classe
+ 
+' Définition des classes
+class Utilisateur {
+    -int idUser
+    -string nom
+    -string prenom
+    -string mail
+    -varchar password
+    -DateTime inscription
+ 
+    {method} + Register()
+    {method} + Login()
+ 
 }
-
-abstract class LandVehicle {
-	int wheelsNb
+ 
+class Roles {
+    -int idRole
+    -string libRole
 }
-
-class Bike {
-	string handlebarType
-	string pedals
+ 
+class Ressource {
+    -int idRessource
+    -string titre
+    -varchar description
+    -varchar contenu
+    -bool visibilite
+    -DateTime dateCreation
 }
-
-class Car {
-	int trunkCapacity
+ 
+class TypeRessource {
+    -int idTypeRessource
+    -string libTypeRessource
 }
-
-class Plane {
+ 
+class Categorie {
+    -int idCat
+    -string libCat
 }
-
-class Boat {}
-
-class Motor {
-	string fuel
+ 
+class Relation {
+    -int idRelation
+    -string libRelation
 }
-
-Vehicle <|-- LandVehicle
-Vehicle <|-- Plane
-Vehicle <|-- Boat
-
-LandVehicle <|-- Bike
-LandVehicle <|-- Car
-
-Bike *-- "0..1" Motor
-Car *-- Motor
-Plane *-- Motor
-Boat *-- Motor
-
-@enduml
-
-@startuml School example
-
-left to right direction
-
-class Etablissement {
-	string nom
+ 
+class Progression {
+    -int idProgression
 }
-
-abstract class Personne {
-	string nom
-	string prénom
-	string email
+ 
+class EspaceEchange {
+    -int idEspaceEchange
+    -string titreEchange
+    -varchar descriptionEchange
+    -DateTime dateCreationEchange
 }
-
-class Étudiant {
+ 
+class Statistique {
+    -int idStat
+    -int nbConsultation
+    -int nbCreation
+    -int nbFavoris
+    -int nbMisDeCote
 }
-
-class Professeur {
+ 
+class MessageEchange {
+    -int idMessage
+    -varchar contenuMessage
 }
-
-class Classe {
-	string nom
-	Date dateDebut
-	Date dateFin
-}
-
-class Cours {
-	Date[] dates
-}
-
-class Matiere {
-	string référence
-	string libelle
-}
-
-Personne <|- Étudiant
-Personne <|- Professeur
-
-Etablissement "1" -- "1..*" Classe : forme
-
-Classe o-- Étudiant : est composée de >
-
-Classe "*" -- "*" Professeur
-(Classe, Professeur) .. Cours
-Matiere --* Cours
-
-
+ 
+' Relations entre les classes
+ 
+' Utilisateur et Roles : Composition (un utilisateur a un ou plusieurs rôles, qui peuvent être obligatoires pour son existence)
+Utilisateur "1" *-- "n" Roles : "A un"
+ 
+' Utilisateur et MessageEchange : Agrégation (un utilisateur peut échanger plusieurs messages, mais les messages peuvent exister sans utilisateur)
+Utilisateur "1" o-- "n" MessageEchange : "Échange"
+ 
+' Utilisateur et Statistique : Agrégation (l'utilisateur a des statistiques, mais les statistiques peuvent exister sans utilisateur)
+Utilisateur "1" o-- "n" Statistique : "Possède"
+ 
+' Utilisateur et EspaceEchange : Agrégation (un utilisateur peut participer à plusieurs espaces d'échange)
+Utilisateur "1" o-- "n" EspaceEchange : "Participe"
+ 
+' Utilisateur et Progression : Agrégation (un utilisateur suit des ressources, mais la progression peut exister sans utilisateur)
+Utilisateur "1" o-- "*" Progression : "Suit"
+ 
+' Ressource et TypeRessource : Agrégation (une ressource appartient à un type de ressource, mais le type peut exister sans ressource)
+Ressource "1" o-- "n" TypeRessource : "Appartient à"
+ 
+' Ressource et Categorie : Agrégation (une ressource peut être classée dans plusieurs catégories)
+Ressource "1" o-- "n" Categorie : "Est classée dans"
+ 
+' Ressource et Relation : Agrégation (les ressources peuvent être liées entre elles de manière indépendante)
+Ressource "1" o-- "*" Relation : "Est liée à"
+ 
+' Ressource et Statistique : Agrégation (les statistiques d'une ressource peuvent exister indépendamment des ressources)
+Ressource "1" o-- "n" Statistique : "A des statistiques"
+ 
+' EspaceEchange et MessageEchange : Composition (un espace d'échange contient des messages, qui n'ont pas de sens sans l'espace)
+EspaceEchange "1" *-- "*" MessageEchange : "Contient"
+ 
+' EspaceEchange et Utilisateur : Agrégation (un utilisateur peut participer à un ou plusieurs espaces d'échange)
+EspaceEchange "1" o-- "n" Utilisateur : "Participe à"
+ 
+' Relations indirectes
+Progression "1" --> "1" Ressource : "Suit"
+ 
 @enduml

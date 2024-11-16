@@ -1,10 +1,86 @@
-@startuml diagramme_cas_utilisation
-
-:User: --> (Use)
-"Main Admin" as Admin
-"Use the application" as (Use)
-Admin --> (Admin the application)
+@startuml
+left to right direction
+actor Citoyen as c
+actor "Citoyen Connecté" as cc
+actor Administrateur as adm
+actor modérateur as modo
+actor "Super administrator" as spadm
+ 
+package  {
+  usecase "Lister les ressources" as UC1
+  usecase "Lister les ressources restreintes" as UC2
+  usecase "Filtrer et trier les ressources " as UC3
+  usecase "Affichier le contenue d'une ressources" as UC4
+  usecase "Création d'un compte " as UC5
+ 
+}
+ 
+package {
+    usecase "Création / Edition d'une ressource " as UC6
+    usecase "Partage d'une publication " as UC7
+    usecase "Ajout d'un commentaire sur une ressources" as UC8
+    usecase "Ajouter / retirer une ressource de ses favorites" as UC9
+    usecase "Indiquer une ressource comme exploié / non exploité" as UC10
+    usecase "Mettre de côté une ressources / progression" as UC11
+    usecase "Afficher un tableau de bord" as UC12
+    usecase "Démarrer une ressources de types activité/jeux" as UC12
+    usecase "Inviter d'autre participant" as UC13
+    usecase "Echanger des messages dans le cadre de la ressources avec les autres participant" as UC14
+}
+ 
+package {
+    usecase "Validation d'une ressource pour publication " as UC15
+    usecase "Modération des commentaire" as UC16
+    usecase "réponse à un commentaire" as UC17
+}
+ 
+package {
+    usecase "Lister / filtrer les ressources en Back Office" as UC18
+    usecase "Ajouter / retirer une ressource" as UC19
+    usecase "Supprimer / suspendre une ressource" as UC20
+    usecase "Ajouter / Editer une catégorie de ressources" as UC21
+    usecase "Supprimer une catégorie de ressources" as UC22
+    usecase "Désactivation / réactivation d'un compte utilisateur " as UC23
+    usecase "Afficher le tableau de bord statistiques (consultation, recherche, exploitations, créations) " as UC24
+    usecase "Filtrer les statistiques (périodes,catégories, types de relations, deressources, zones géographiques,etc.) " as UC25
+    usecase "Exporter les statistiques" as UC26
+}
+ 
+package {
+    usecase "Création d’un compte modérateur / administrateur / superadministrateur " as UC26
+}
+ 
+c --> UC1
+c --> UC2
+c --> UC3
+c --> UC4
+c --> UC5
+c --> UC17
+ 
+cc-->UC6
+cc-->UC7
+cc-->UC8
+cc-->UC9
+cc-->UC10
+cc-->UC11
+cc-->UC12
+cc-->UC13
+cc-->UC14
+ 
+adm --> UC18
+adm --> UC19
+adm --> UC20
+adm --> UC21
+adm --> UC22
+adm --> UC23
+adm --> UC24
+adm --> UC25
+adm --> UC26
+ 
+modo --> UC15
+modo --> UC16
+modo --> UC17
+ 
+spadm --> UC26
+ 
 @enduml
-
-
-
