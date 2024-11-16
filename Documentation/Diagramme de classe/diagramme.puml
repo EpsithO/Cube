@@ -1,0 +1,90 @@
+@startuml Vehicle example
+
+abstract class Vehicle {
+	int passengersNb
+}
+
+abstract class LandVehicle {
+	int wheelsNb
+}
+
+class Bike {
+	string handlebarType
+	string pedals
+}
+
+class Car {
+	int trunkCapacity
+}
+
+class Plane {
+}
+
+class Boat {}
+
+class Motor {
+	string fuel
+}
+
+Vehicle <|-- LandVehicle
+Vehicle <|-- Plane
+Vehicle <|-- Boat
+
+LandVehicle <|-- Bike
+LandVehicle <|-- Car
+
+Bike *-- "0..1" Motor
+Car *-- Motor
+Plane *-- Motor
+Boat *-- Motor
+
+@enduml
+
+@startuml School example
+
+left to right direction
+
+class Etablissement {
+	string nom
+}
+
+abstract class Personne {
+	string nom
+	string prénom
+	string email
+}
+
+class Étudiant {
+}
+
+class Professeur {
+}
+
+class Classe {
+	string nom
+	Date dateDebut
+	Date dateFin
+}
+
+class Cours {
+	Date[] dates
+}
+
+class Matiere {
+	string référence
+	string libelle
+}
+
+Personne <|- Étudiant
+Personne <|- Professeur
+
+Etablissement "1" -- "1..*" Classe : forme
+
+Classe o-- Étudiant : est composée de >
+
+Classe "*" -- "*" Professeur
+(Classe, Professeur) .. Cours
+Matiere --* Cours
+
+
+@enduml
