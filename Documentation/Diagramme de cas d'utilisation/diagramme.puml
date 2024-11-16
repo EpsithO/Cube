@@ -1,4 +1,4 @@
-@startuml
+@startuml diagramme_cas_utilisation
 left to right direction
 actor Citoyen as c
 actor "Citoyen Connecté" as cc
